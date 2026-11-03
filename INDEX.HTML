@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEEHOUSE — Men's T-Shirts India</title>
+<style>
+  /* ===== Reset & variables ===== */
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#f7f6f3; --card:#fff; --ink:#161616; --muted:#7a7a7a;
+    --accent:#ff5a2e; --green:#388e3c; --line:#e8e5df; --radius:14px;
+    --shadow:0 10px 30px rgba(0,0,0,.08);
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  img,svg{display:block}
+  button{font-family:inherit}
+
+  /* ===== Header ===== */
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{max-width:1150px;margin:auto;display:flex;align-items:center;gap:1.5rem;padding:.9rem 1.25rem}
+  .logo{font-weight:800;font-size:1.25rem;letter-spacing:.5px;text-decoration:none;color:var(--ink)}
+  .logo span{color:var(--accent)}
+  .nav nav{display:flex;gap:1.25rem;margin-left:auto}
+  .nav nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:.95rem}
+  .nav nav a:hover{color:var(--accent)}
+  .cart-btn{position:relative;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:.55rem 1.1rem;font-size:.95rem;font-weight:600;cursor:pointer}
+  .cart-count{position:absolute;top:-7px;right:-7px;background:var(--accent);color:#fff;font-size:.7rem;font-weight:700;min-width:20px;height:20px;border-radius:999px;display:grid;place-items:center;padding:0 4px}
+
+  /* ===== Hero ===== */
+  .hero{background:linear-gradient(135deg,#1a1a1a,#333);color:#fff;text-align:center;padding:4.5rem 1.25rem 3.5rem}
+  .hero h1{font-size:clamp(2rem,5vw,3.25rem);font-weight:800;line-height:1.15}
+  .hero h1 span{color:var(--accent)}
+  .hero p{max-width:560px;margin:1rem auto 1.75rem;color:#cfcfcf}
+  .perks{display:flex;flex-wrap:wrap;gap:.75rem 2.2rem;justify-content:center;background:#fff;border-bottom:1px solid var(--line);padding:.9rem 1rem;font-size:.88rem;font-weight:600;color:#555}
+
+  /* ===== Buttons ===== */
+  .btn{display:inline-block;border:0;border-radius:999px;padding:.8rem 1.6rem;font-weight:700;cursor:pointer;transition:.2s}
+  .btn.primary{background:var(--ink);color:#fff}
+  .btn.primary:hover{background:var(--accent);transform:translateY(-2px)}
+  .btn.light{background:#fff;color:var(--ink)}
+  .btn.light:hover{background:var(--accent);color:#fff}
+  .btn.full{width:100%}
+
+  /* ===== Shop section ===== */
+  .section{max-width:1150px;margin:auto;padding:2.5rem 1.25rem 4rem}
+  .section-head{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;justify-content:space-between;margin-bottom:1.5rem}
+  .section-head h2{font-size:1.6rem}
+  .filters{display:flex;gap:.5rem;flex-wrap:wrap}
+  .filter-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:.5rem 1.1rem;font-weight:600;cursor:pointer;transition:.2s}
+  .filter-btn:hover{border-color:var(--ink)}
+  .filter-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.25rem}
+
+  /* ===== Product card ===== */
+  .card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:.25s;animation:fadeUp .45s ease both}
+  .card:hover{transform:translateY(-5px)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .card-img{position:relative;background:#f1efe9;aspect-ratio:1/1;display:grid;place-items:center}
+  .card-img svg{width:86%;height:86%}
+  .badge{position:absolute;top:12px;left:12px;background:var(--green);color:#fff;font-size:.68rem;font-weight:800;letter-spacing:.5px;padding:.28rem .6rem;border-radius:999px}
+  .quick-btn{position:absolute;left:50%;bottom:14px;transform:translate(-50%,8px);opacity:0;background:#fff;border:0;padding:.55rem 1.1rem;border-radius:999px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.15);transition:.25s}
+  .card-img:hover .quick-btn{opacity:1;transform:translate(-50%,0)}
+  .card-body{padding:1rem 1.1rem 1.2rem}
+  .card-top{display:flex;justify-content:space-between;gap:.5rem;align-items:baseline}
+  .card-top h3{font-size:1rem}
+  .stars{color:#e8a100;font-weight:700;font-size:.85rem;white-space:nowrap}
+  .price{font-weight:800;margin-top:.25rem;font-size:1.05rem}
+  .price s{color:var(--muted);font-weight:500;margin-left:.45rem;font-size:.88rem}
+  .off{color:var(--green);font-weight:800;font-size:.8rem;margin-left:.45rem}
+  .dots{display:flex;gap:.4rem;margin:.6rem 0 .9rem}
+  .dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.2)}
+
+  /* ===== Quick view modal ===== */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;padding:1rem;opacity:0;pointer-events:none;transition:.25s;z-index:100}
+  .modal.open{opacity:1;pointer-events:auto}
+  .modal-box{background:#fff;border-radius:18px;max-width:780px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;padding:1.5rem;position:relative;transform:translateY(14px);transition:.25s;max-height:90vh;overflow:auto}
+  .modal.open .modal-box{transform:none}
+  .modal-img{background:#f1efe9;border-radius:12px;display:grid;place-items:center;padding:1rem}
+  .modal-img svg{width:100%;max-width:320px}
+  .close-btn{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:1rem;cursor:pointer}
+  .modal-info h2{font-size:1.4rem;margin-bottom:.25rem}
+  .opt-label{font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;color:#555;margin:1.1rem 0 .5rem}
+  .swatches{display:flex;gap:.55rem}
+  .swatch{width:28px;height:28px;border-radius:50%;border:2px solid #fff;outline:2px solid transparent;cursor:pointer;transition:.15s}
+  .swatch.active{outline-color:var(--ink)}
+  .sizes{display:flex;gap:.5rem;flex-wrap:wrap}
+  .size{min-width:46px;padding:.5rem .7rem;border-radius:10px;border:1px solid var(--line);background:#fff;font-weight:600;cursor:pointer}
+  .size.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .qty-row{display:flex;align-items:center;gap:1rem;margin:1.2rem 0}
+  .qty-row .opt-label{margin:0}
+  .qty{display:flex;align-items:center;gap:.9rem;border:1px solid var(--line);border-radius:999px;padding:.35rem .9rem}
+  .qty button{border:0;background:none;font-size:1.15rem;font-weight:700;cursor:pointer;width:22px}
+  #mQty{min-width:18px;text-align:center;font-weight:700}
+
+  /* ===== Pincode checker ===== */
+  .pin-row{display:flex;gap:.5rem;margin-top:.5rem}
+  .pin-row input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:.6rem .8rem;font:inherit}
+  .check-btn{border:0;background:var(--ink);color:#fff;border-radius:10px;padding:.6rem 1.1rem;font-weight:700;cursor:pointer;white-space:nowrap}
+  .check-btn:hover{background:var(--accent)}
+  .pin-result{font-size:.85rem;margin-top:.5rem;font-weight:600;min-height:1.2em}
+  .pin-result.err{color:#c0392b}
+  .pin-result.ok{color:var(--green)}
+
+  /* ===== Cart drawer ===== */
+  .drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:#fff;z-index:120;display:flex;flex-direction:column;transform:translateX(100%);transition:.3s;box-shadow:-10px 0 40px rgba(0,0,0,.15)}
+  .drawer.open{transform:none}
+  .drawer-head{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.25rem;border-bottom:1px solid var(--line)}
+  .drawer-head h2{font-size:1.15rem}
+  .icon-btn{border:0;background:none;font-size:1.3rem;cursor:pointer}
+  .cart-items{flex:1;overflow:auto;padding:1rem 1.25rem;display:flex;flex-direction:column;gap:1rem}
+  .empty{margin:auto;text-align:center;color:var(--muted)}
+  .cart-item{display:flex;gap:.9rem;align-items:center;border:1px solid var(--line);border-radius:12px;padding:.7rem}
+  .thumb{width:58px;height:58px;background:#f1efe9;border-radius:10px;display:grid;place-items:center;flex:none}
+  .thumb svg{width:80%}
+  .ci-info{flex:1}
+  .ci-info h4{font-size:.95rem}
+  .muted{color:var(--muted);font-size:.85rem}
+  .qty-mini{display:flex;align-items:center;gap:.6rem;margin-top:.35rem}
+  .qty-mini button{width:24px;height:24px;border-radius:6px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:700}
+  .ci-right{display:flex;flex-direction:column;align-items:flex-end;gap:.5rem}
+  .remove{border:0;background:none;color:var(--muted);cursor:pointer}
+  .drawer-foot{border-top:1px solid var(--line);padding:1.1rem 1.25rem;display:grid;gap:.6rem}
+  .ship-bar{height:6px;background:var(--line);border-radius:999px;overflow:hidden}
+  .ship-fill{height:100%;width:0;background:var(--green);transition:.4s}
+  .ship-msg{font-size:.8rem;color:var(--muted)}
+  .total{display:flex;justify-content:space-between;font-weight:800;font-size:1.05rem}
+  .savings{color:var(--green);font-weight:700;font-size:.85rem}
+  .fineprint{font-size:.75rem;color:var(--muted)}
+
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:110;opacity:0;pointer-events:none;transition:.25s}
+  .overlay.show{opacity:1;pointer-events:auto}
+
+  /* ===== Toast & footer ===== */
+  .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,80px);background:var(--ink);color:#fff;padding:.8rem 1.3rem;border-radius:999px;font-weight:600;opacity:0;transition:.3s;z-index:200;box-shadow:var(--shadow)}
+  .toast.show{transform:translate(-50%,0);opacity:1}
+  footer{background:#141414;color:#bbb;text-align:center;padding:2rem 1rem;font-size:.9rem;margin-top:2rem}
+
+  @media(max-width:720px){
+    .nav nav{display:none}
+    .modal-box{grid-template-columns:1fr}
+    .section{padding:1.75rem 1rem 3rem}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header>
+  <div class="nav">
+    <a class="logo" href="#">TEE<span>HOUSE</span></a>
+    <nav>
+      <a href="#shop">Shop</a>
+      <a href="#shop">New Arrivals</a>
+      <a href="#shop">Sale</a>
+    </nav>
+    <button class="cart-btn" id="cartBtn">🛒 Cart <span class="cart-count" id="cartCount">0</span></button>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <h1>Everyday Essentials.<br><span>Premium Men's Tees.</span></h1>
+  <p>Soft, durable, perfectly fitted t-shirts from ₹449. COD available, free delivery above ₹999.</p>
+  <a href="#shop" class="btn light">Shop the Collection</a>
+</section>
+<div class="perks">
+  <span>🚚 FREE delivery above ₹999</span>
+  <span>💵 Cash on Delivery available</span>
+  <span>↩️ 30-day easy returns</span>
+  <span>🧵 100% cotton · GST included</span>
+</div>
+
+<!-- ===== Products ===== -->
+<main class="section" id="shop">
+  <div class="section-head">
+    <h2>Men's T-Shirts</h2>
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="basic">Basic</button>
+      <button class="filter-btn" data-filter="graphic">Graphic</button>
+      <button class="filter-btn" data-filter="polo">Polo</button>
+      <button class="filter-btn" data-filter="oversized">Oversized</button>
+    </div>
+  </div>
+  <div class="grid" id="productGrid"></div>
+</main>
+
+<!-- ===== Quick view modal ===== -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="close-btn" id="modalClose" aria-label="Close">✕</button>
+    <div class="modal-img" id="mImg"></div>
+    <div class="modal-info">
+      <h2 id="mName"></h2>
+      <p class="stars" id="mRating"></p>
+      <p class="price" id="mPrice"></p>
+      <p class="opt-label">Color</p>
+      <div class="swatches" id="mColors"></div>
+      <p class="opt-label">Size</p>
+      <div class="sizes" id="mSizes"></div>
+      <div class="qty-row">
+        <span class="opt-label">Qty</span>
+        <div class="qty">
+          <button id="qtyMinus">−</button><span id="mQty">1</span><button id="qtyPlus">+</button>
+        </div>
+      </div>
+
+      <p class="opt-label">Check delivery</p>
+      <div class="pin-row">
+        <input id="pinInput" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit pincode">
+        <button class="check-btn" id="pinBtn">Check</button>
+      </div>
+      <p class="pin-result" id="pinResult"></p>
+
+      <button class="btn primary full" id="mAdd">Add to Cart</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Cart drawer ===== -->
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h2>Your Cart</h2>
+    <button class="icon-btn" id="drawerClose" aria-label="Close">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="drawer-foot">
+    <div class="ship-bar"><div class="ship-fill" id="shipFill"></div></div>
+    <p class="ship-msg" id="shipMsg"></p>
+    <div class="total">Total <span id="cartTotal">₹0</span></div>
+    <p class="savings" id="savings"></p>
+    <button class="btn primary full" id="checkoutBtn">Checkout</button>
+    <p class="fineprint">Inclusive of all taxes · COD & UPI accepted</p>
+  </div>
+</aside>
+<div class="overlay" id="overlay"></div>
+<div class="toast" id="toast"></div>
+
+<footer>
+  <p>© <span id="year"></span> TEEHOUSE India — Demo store built with HTML, CSS &amp; JavaScript.</p>
+</footer>
+
+<script>
+/* ================= Config ================= */
+const FREE_SHIP = 999;                 // free delivery threshold (₹)
+const SIZES = ['S','M','L','XL','XXL'];
+
+/* Prices in ₹ (whole rupees, MRP = struck-through price) */
+const PRODUCTS = [
+  {id:1, name:"Classic Crew Tee",    price:499, mrp:999,  category:"basic",     rating:4.8, reviews:2140, colors:["#1c1c1c","#ffffff","#3e5c9a","#8e2f2f"]},
+  {id:2, name:"Vintage Graphic Tee", price:699, mrp:1199, category:"graphic",   rating:4.6, reviews:1320, colors:["#e8e2d5","#1c1c1c","#4f6b4f"]},
+  {id:3, name:"Men's Polo Tee",      price:899, mrp:1499, category:"polo",      rating:4.7, reviews:980,  colors:["#22333f","#ffffff","#7a5c3e"]},
+  {id:4, name:"Oversized Drop Tee",  price:799,           category:"oversized", rating:4.9, reviews:3410, colors:["#d9d9d9","#1c1c1c","#b5651d"]},
+  {id:5, name:"Essential V-Neck",    price:449, mrp:899,  category:"basic",     rating:4.5, reviews:760,  colors:["#ffffff","#1c1c1c","#5b7bd5"]},
+  {id:6, name:"Retro Print Tee",     price:649,           category:"graphic",   rating:4.4, reviews:590,  colors:["#2f2f2f","#c0392b","#e8e2d5"]},
+  {id:7, name:"Dry-Fit Sport Tee",   price:749, mrp:1299, category:"basic",     rating:4.7, reviews:1880, colors:["#1c1c1c","#274c77","#6a994e"]},
+  {id:8, name:"Striped Polo Tee",    price:999, mrp:1799, category:"polo",      rating:4.6, reviews:870,  colors:["#203a43","#f0ebe0"]},
+];
+
+/* ================= Helpers & state ================= */
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+/* ₹ with Indian digit grouping: 1299 -> ₹1,299 ; 125000 -> ₹1,25,000 */
+const money = n => '₹' + Math.round(n).toLocaleString('en-IN');
+
+const state = { filter:'all', cart: loadCart(), sel:{ id:null, color:null, size:'M', qty:1 } };
+
+function loadCart(){
+  try{ return JSON.parse(localStorage.getItem('teehouse-cart-inr')) || []; }catch{ return []; }
+}
+function saveCart(){
+  try{ localStorage.setItem('teehouse-cart-inr', JSON.stringify(state.cart)); }catch{}
+}
+
+/* T-shirt drawn as inline SVG (colors change live — no image files needed) */
+function teeSVG(color, print = false){
+  return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <path d="M70 22 C80 40 120 40 130 22 L170 40 L188 86 L150 100 L143 86 L143 182 L57 182 L57 86 L50 100 L12 86 L30 40 Z"
+      fill="${color}" stroke="rgba(0,0,0,.18)" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M70 22 C80 40 120 40 130 22" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="7" stroke-linecap="round"/>
+    ${print ? '<rect x="88" y="78" width="24" height="24" rx="4" fill="rgba(0,0,0,.25)"/>' : ''}
+  </svg>`;
+}
+
+/* ================= Product grid ================= */
+function renderProducts(){
+  const list = PRODUCTS.filter(p => state.filter === 'all' || p.category === state.filter);
+  $('#productGrid').innerHTML = list.map(p => {
+    const off = p.mrp ? Math.round((1 - p.price / p.mrp) * 100) : 0;
+    return `
+    <article class="card" data-id="${p.id}">
+      <div class="card-img">
+        ${teeSVG(p.colors[0], p.category === 'graphic')}
+        ${off ? `<span class="badge">${off}% OFF</span>` : ''}
+        <button class="quick-btn">Quick View</button>
+      </div>
+      <div class="card-body">
+        <div class="card-top"><h3>${p.name}</h3><span class="stars">★ ${p.rating}</span></div>
+        <p class="price">${money(p.price)}${p.mrp ? ` <s>${money(p.mrp)}</s> <span class="off">${off}% off</span>` : ''}</p>
+        <div class="dots">${p.colors.map(c => `<span class="dot" style="background:${c}"></span>`).join('')}</div>
+        <button class="btn primary full add-btn">Add to Cart</button>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ================= Cart ================= */
+function addToCart(id, size, color, qty){
+  const p = PRODUCTS.find(x => x.id === id);
+  const line = state.cart.find(l => l.id === id && l.size === size && l.color === color);
+  if(line) line.qty += qty;
+  else state.cart.push({ id, name:p.name, price:p.price, size, color, qty });
+  saveCart(); renderCart();
+  toast(`Added ${p.name} (${size}) — ${money(p.price * qty)}`);
+}
+
+function renderCart(){
+  const box = $('#cartItems');
+  box.innerHTML = state.cart.length ? state.cart.map((l, i) => `
+    <div class="cart-item">
+      <div class="thumb">${teeSVG(l.color)}</div>
+      <div class="ci-info">
+        <h4>${l.name}</h4>
+        <p class="muted">${money(l.price)} · Size ${l.size}</p>
+        <div class="qty-mini">
+          <button data-i="${i}" data-act="dec">−</button><span>${l.qty}</span><button data-i="${i}" data-act="inc">+</button>
+        </div>
+      </div>
+      <div class="ci-right">
+        <button class="remove" data-i="${i}" data-act="rm">✕</button>
+        <strong>${money(l.price * l.qty)}</strong>
+      </div>
+    </div>`).join('')
+    : '<p class="empty">Your cart is empty.</p>';
+
+  const total    = state.cart.reduce((s, l) => s + l.price * l.qty, 0);
+  const mrpTotal = state.cart.reduce((s, l) => {
+    const p = PRODUCTS.find(x => x.id === l.id);
+    return s + (p.mrp || p.price) * l.qty;
+  }, 0);
+  const saved = mrpTotal - total;
+
+  $('#cartTotal').textContent = money(total);
+  $('#savings').textContent = saved > 0 ? `You save ${money(saved)} on this order 🎉` : '';
+
+  /* Free-delivery progress bar (₹999) */
+  const pct = Math.min(100, (total / FREE_SHIP) * 100);
+  $('#shipFill').style.width = pct + '%';
+  $('#shipMsg').innerHTML = total >= FREE_SHIP
+    ? '🎉 You\'ve unlocked <b>FREE delivery</b>!'
+    : `Add ${money(FREE_SHIP - total)} more for FREE delivery`;
+
+  const count = state.cart.reduce((s, l) => s + l.qty, 0);
+  $('#cartCount').textContent = count;
+  $('#cartCount').style.display = count ? 'grid' : 'none';
+}
+
+/* ================= Quick view modal ================= */
+function openModal(id){
+  const p = PRODUCTS.find(x => x.id === id);
+  state.sel = { id, color:p.colors[0], size:'M', qty:1 };
+  const off = p.mrp ? Math.round((1 - p.price / p.mrp) * 100) : 0;
+
+  $('#mName').textContent   = p.name;
+  $('#mRating').textContent = `★ ${p.rating} (${p.reviews.toLocaleString('en-IN')} reviews)`;
+  $('#mPrice').innerHTML    = money(p.price) +
+    (p.mrp ? ` <s>${money(p.mrp)}</s> <span class="off">${off}% off</span>` : '');
+  $('#mImg').innerHTML      = teeSVG(p.colors[0], p.category === 'graphic');
+  $('#mColors').innerHTML   = p.colors.map((c, i) =>
+    `<button class="swatch ${i===0?'active':''}" data-color="${c}" style="background:${c}" aria-label="Color"></button>`).join('');
+  $('#mSizes').innerHTML    = SIZES.map(s =>
+    `<button class="size ${s==='M'?'active':''}" data-size="${s}">${s}</button>`).join('');
+  $('#mQty').textContent = 1;
+  $('#pinInput').value = '';
+  $('#pinResult').textContent = '';
+  $('#pinResult').className = 'pin-result';
+
+  $('#modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAll(){
+  $('#modal').classList.remove('open');
+  $('#drawer').classList.remove('open');
+  $('#overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function openCart(){
+  $('#drawer').classList.add('open');
+  $('#overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+/* ================= Pincode delivery checker ================= */
+function checkPincode(){
+  const pin = $('#pinInput').value.trim();
+  const res = $('#pinResult');
+  if(!/^[1-9][0-9]{5}$/.test(pin)){
+    res.textContent = '✖ Please enter a valid 6-digit pincode';
+    res.className = 'pin-result err';
+    return;
+  }
+  const days = 2 + (+pin % 4);   // demo estimate: 2–5 days based on pincode
+  const date = new Date(Date.now() + days * 86400000)
+    .toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'short' });
+  res.textContent = `✔ Delivery by ${date} · COD available`;
+  res.className = 'pin-result ok';
+}
+
+/* ================= Toast ================= */
+let toastTimer;
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ================= Events ================= */
+ $$('.filter-btn').forEach(b => b.addEventListener('click', () => {
+  $$('.filter-btn').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  state.filter = b.dataset.filter;
+  renderProducts();
+}));
+
+ $('#productGrid').addEventListener('click', e => {
+  const card = e.target.closest('.card');
+  if(!card) return;
+  const id = +card.dataset.id;
+  if(e.target.closest('.quick-btn'))    openModal(id);
+  else if(e.target.closest('.add-btn')) addToCart(id, 'M', PRODUCTS.find(p => p.id === id).colors[0], 1);
+});
+
+ $('#mColors').addEventListener('click', e => {
+  const b = e.target.closest('.swatch');
+  if(!b) return;
+  $$('#mColors .swatch').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  state.sel.color = b.dataset.color;
+  const p = PRODUCTS.find(x => x.id === state.sel.id);
+  $('#mImg').innerHTML = teeSVG(state.sel.color, p.category === 'graphic');
+});
+
+ $('#mSizes').addEventListener('click', e => {
+  const b = e.target.closest('.size');
+  if(!b) return;
+  $$('#mSizes .size').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  state.sel.size = b.dataset.size;
+});
+
+ $('#qtyPlus').addEventListener('click', () => { state.sel.qty++; $('#mQty').textContent = state.sel.qty; });
+ $('#qtyMinus').addEventListener('click', () => { state.sel.qty = Math.max(1, state.sel.qty - 1); $('#mQty').textContent = state.sel.qty; });
+ $('#mAdd').addEventListener('click', () => {
+  addToCart(state.sel.id, state.sel.size, state.sel.color, state.sel.qty);
+  closeAll();
+});
+
+ $('#pinBtn').addEventListener('click', checkPincode);
+ $('#pinInput').addEventListener('keydown', e => { if(e.key === 'Enter') checkPincode(); });
+
+ $('#cartItems').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if(!b) return;
+  const i = +b.dataset.i, act = b.dataset.act;
+  if(act === 'inc') state.cart[i].qty++;
+  if(act === 'dec'){ state.cart[i].qty--; if(state.cart[i].qty < 1) state.cart.splice(i, 1); }
+  if(act === 'rm')  state.cart.splice(i, 1);
+  saveCart(); renderCart();
+});
+
+ $('#cartBtn').addEventListener('click', openCart);
+ $('#drawerClose').addEventListener('click', closeAll);
+ $('#modalClose').addEventListener('click', closeAll);
+ $('#overlay').addEventListener('click', closeAll);
+ $('#modal').addEventListener('click', e => { if(e.target.id === 'modal') closeAll(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeAll(); });
+ $('#checkoutBtn').addEventListener('click', () =>
+  toast('Demo store — connect Razorpay / UPI here for real payments'));
+
+/* ================= Init ================= */
+ $('#year').textContent = new Date().getFullYear();
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
